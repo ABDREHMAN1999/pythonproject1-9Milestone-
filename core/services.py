@@ -33,8 +33,11 @@ class DocumentService:
         ## get total pages 
         total_pages = self.file.get_total_pages(file_path)
         ## convert to images 
+        self.file.convert_to_images(file_path)
         ## create required variables 
+        upload_date = datetime.now().strftime("%d%m%Y")
+        doc = [uploaded_file.name,file_path,thumb_nail_path, tags, description, upload_date, lecture_date , total_pages]
         ## save to db
-        #self.repo.add_document(doc)
+        self.repo.add_document(doc)
         pass
         
