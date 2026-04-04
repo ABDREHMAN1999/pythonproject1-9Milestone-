@@ -2,7 +2,6 @@ from db.database import connect
 
 
 class DocumentRepository:
-    
     def add_document(self,doc:list): 
         connection = connect()
         cursor = connection.cursor()
@@ -13,5 +12,22 @@ class DocumentRepository:
                        )values(?,?,?,?,?,?,?,?)
                        """,(doc[0],doc[1],doc[2],doc[3],doc[4],doc[5],doc[6], doc[7]))
         connection.commit()
+        connection.close()  
+    def search_documents(self, tags= None, date=None):
+        connection = connect()
+        cursor = connection.cursor()
+        query = "SELECT * FROM docuemts WHERE 1 = 1"
+        params = []
+        
+        if tags:
+            query+= " AND tag LIKE ?"
+            params.append(f"%{tags}%")
+        if date:
+            query += " AND lecture_date = ?"
+            params.append(str(date))
+        
+        cursor.execute(query, params)
+        rows = cursor.fetchall()
         connection.close()
+        return rows
     

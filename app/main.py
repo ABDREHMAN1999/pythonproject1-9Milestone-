@@ -3,7 +3,7 @@ import os
 import sys
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(base_dir)
-from db.database import init_db
+from db.database import init_db , connect
 from core.services import DocumentService
 service = DocumentService()
 
@@ -34,10 +34,41 @@ with upload:
         else:
             st.error("please upload a pdf file")
         
-    pass
 
 with search:
-    pass 
+    col1 , col2 = st.columns(2)
+    with col1:
+        tags = st.text_input("search by tags")
+        tag_search_button = st.button("Search", key = "tag search", type = "primary")
+    with col2:
+        date = st.text_input("search by date")
+        date_search_button = st.button("Search", key = "date search", type = "primary")
+        
+    if tag_search_button or date_search_button:
+        rows = service.search_doc(tags, date)
+        st.subheader("Documents")
+        container = st.container(border= True, height= "content", width = "stretch")
+        with container:
+            for doc in rows:
+                c1 , c2 = st.columns([1,4])
+                with c1:
+                    if os.path.exists(doc[3]):
+                        st.image(doc[3])
+                with c2:
+                    st.write(doc[1])
+                    st.write(doc[4])
+                    st.write(doc[5])
+                    st.write(doc[7])
+                with st.button("Open", key = f"open{doc[1]}button"):
+                    selected_doc = doc
+                    
+                    
+                
+        
+            
+        
+            
+
 
 with Analytics:
     pass 
