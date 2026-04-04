@@ -11,6 +11,18 @@ service = DocumentService()
 
 base_dir = os.path.join(os.path.dirname(__file__), "..")
 
+if "reader_mode" not in st.session_state:
+    st.session_state.reader_mode = False
+    
+if "selected_doc" not in st.session_state:
+    st.session_state.selected_doc= None
+
+if "current_page" not in st.session_state:
+    st.session_state.current_page = 0 
+
+    
+
+
 init_db()
 st.set_page_config(page_title="DocManager", layout="wide")
 
@@ -30,6 +42,7 @@ with upload:
     if submit:
         if uploaded_file:
             service.upload_document(uploaded_file, tags, description, lecture_date)
+            st.success("File uploaded Sucessfully")
             pass
         else:
             st.error("please upload a pdf file")
@@ -44,11 +57,10 @@ with search:
         date = st.text_input("search by date")
         date_search_button = st.button("Search", key = "date search", type = "primary")
         
-    if tag_search_button or date_search_button:
-        
+    if (tag_search_button or date_search_button) and not st.session_state.reader_mode:
         rows = service.search_doc(tags, date)
         st.subheader("Documents")
-        container = st.container(border= True)
+        container = st.container(border= True, height=600)
         with container:
             for doc in rows:
                 c1 , c2 = st.columns([1,4])
@@ -60,7 +72,19 @@ with search:
                     st.write(doc[4])
                     st.write(doc[5])
                     st.write(doc[7])
-                open_pdf = st.button("Open", key= f"{doc[3]}")  
+                    if st.button("Open",key = f"open_{doc[0]}"):
+                        st.write("BUTTON CLICKED")   # 👈 ADD THIS
+                        st.session_state.selected_doc = doc
+                        st.session_state.current_page = 0 
+                        st.session_state.reader_mode = True
+                        st.rerun()
+    else:
+        st.write("reader mode")
+        doc = st.session_state.selected_doc
+        st.write(f"Reading  📖📖📖 {doc[1]}")
+
+        
+
         
         
                 
