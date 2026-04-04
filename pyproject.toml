@@ -9,4 +9,5 @@ dependencies = ["streamlit",
 "numpy",
 "matplotlib",
 "seaborn",
-"pymupdf"]
+"pymupdf",
+"ipykernel"]

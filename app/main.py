@@ -45,9 +45,10 @@ with search:
         date_search_button = st.button("Search", key = "date search", type = "primary")
         
     if tag_search_button or date_search_button:
+        
         rows = service.search_doc(tags, date)
         st.subheader("Documents")
-        container = st.container(border= True, height= "content", width = "stretch")
+        container = st.container(border= True)
         with container:
             for doc in rows:
                 c1 , c2 = st.columns([1,4])
@@ -59,16 +60,12 @@ with search:
                     st.write(doc[4])
                     st.write(doc[5])
                     st.write(doc[7])
-                with st.button("Open", key = f"open{doc[1]}button"):
-                    selected_doc = doc
-                    
+                open_pdf = st.button("Open", key= f"{doc[3]}")  
+        
+        
+                
                     
                 
-        
-            
-        
-            
-
 
 with Analytics:
     pass 
