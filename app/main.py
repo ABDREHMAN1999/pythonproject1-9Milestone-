@@ -72,16 +72,7 @@ with search:
                     st.write(doc[4])
                     st.write(doc[5])
                     st.write(doc[7])
-                    if st.button("Open",key = f"open_{doc[0]}"):
-                        st.write("BUTTON CLICKED")   # 👈 ADD THIS
-                        st.session_state.selected_doc = doc
-                        st.session_state.current_page = 0 
-                        st.session_state.reader_mode = True
-                        st.rerun()
-    else:
-        st.write("reader mode")
-        doc = st.session_state.selected_doc
-        st.write(f"Reading  📖📖📖 {doc[1]}")
+
 
         
 
