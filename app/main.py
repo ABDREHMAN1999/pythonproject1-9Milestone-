@@ -67,6 +67,27 @@ with search_tab:
         st.write("✅ Hello - Reader Mode Active")
         st.write(f"Title: {doc[1]}")
         st.write(f"Description: {doc[4]}")
+        folder_path = os.path.basename(doc[2]).replace(".pdf", "")
+        img_dir = os.path.join("storage","pdf's",folder_path)
+        st.write(f"Image Directory: {img_dir}")
+        st.write(f"files present: {os.listdir(img_dir) if os.path.exists(img_dir) else "images not found"}")
+        images = sorted(os.listdir(img_dir))
+        total_pages = len(images)
+        current_page = st.session_state.current_page
+        col1 , col2, col3 = st.columns([1,2,1])
+        with col1:
+            if st.button("<previous") and current_page>0:
+                st.session_state.current_page -=1
+                st.rerun()
+                
+        with col3:
+            if st.button("> next") and current_page<=total_pages-1:
+                st.session_state.current_page +=1
+                st.rerun()
+        img_path = os.path.join(img_dir, images[current_page])
+        st.image(img_path)
+
+        
 
         if st.button("⬅ Back"):
             st.session_state.reader_mode = False
@@ -116,7 +137,6 @@ with search_tab:
                         st.write(doc[4])  # description
                         st.write(doc[5])  # tags
                         st.write(doc[7])  # date
-
                         if st.button("Open", key=f"open_{doc[0]}"):
                             st.session_state.reader_mode = True
                             st.session_state.selected_doc = doc

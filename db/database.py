@@ -14,7 +14,7 @@ def init_db():
     ## Data base Schema
     cursor.execute("""
                    CREATE TABLE IF NOT EXISTS docuemts (
-                       id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                       id INTEGER PRIMARY KEY, 
                        name TEXT, 
                        path TEXT, 
                        thumnail_path TEXT,
@@ -28,5 +28,6 @@ def init_db():
     
     conn.commit()
     print("db operation successful")
+    print("Generated ID:", cursor.lastrowid)
     conn.close()
     
