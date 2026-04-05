@@ -13,8 +13,8 @@ def init_db():
     
     ## Data base Schema
     cursor.execute("""
-                   CREATE TABLE IF NOT EXISTs docuemts (
-                       id INTEGER PRIMATY KEY AUTOINCREAMENT, 
+                   CREATE TABLE IF NOT EXISTS docuemts (
+                       id INTEGER PRIMARY KEY AUTOINCREMENT, 
                        name TEXT, 
                        path TEXT, 
                        thumnail_path TEXT,
