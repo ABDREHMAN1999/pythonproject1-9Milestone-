@@ -8,8 +8,10 @@ sys.path.append(base_dir)
 
 from db.database import init_db, connect
 from core.services import DocumentService
+from core.analyticsservice import AnalyticsService
 
 service = DocumentService()
+ana = AnalyticsService()
 
 # ---------------- SESSION STATE ----------------
 if "reader_mode" not in st.session_state:
@@ -86,6 +88,15 @@ with search_tab:
                 st.rerun()
         img_path = os.path.join(img_dir, images[current_page])
         st.image(img_path)
+        
+        #recored page visit analytics
+        ana.update_analytics(doc[0], st.session_state.current_page)
+        pages_completed = ana.get_unique_pages(doc[0])
+        
+        progress = (pages_completed/total_pages)*100 if total_pages else 0
+        st.progress(progress/100)
+        
+        
         with open(doc[2],"rb") as f:
             data_pdf = f.read()
         st.download_button("Download PDF", data = data_pdf, mime= "application/pdf", file_name=doc[1], type = "primary")
@@ -94,6 +105,8 @@ with search_tab:
             st.session_state.reader_mode = False
             st.session_state.selected_doc = None
             st.rerun()
+            
+        
 
     # ---------- SEARCH MODE ----------
     else:
