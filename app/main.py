@@ -72,8 +72,6 @@ with search_tab:
         st.write(f"Description: {doc[4]}")
         folder_path = os.path.basename(doc[2]).replace(".pdf", "")
         img_dir = os.path.join("storage","pdf's",folder_path)
-        st.write(f"Image Directory: {img_dir}")
-        st.write(f"files present: {os.listdir(img_dir) if os.path.exists(img_dir) else "images not found"}")
         images = sorted(os.listdir(img_dir))
         total_pages = len(images)
         current_page = st.session_state.current_page
@@ -96,6 +94,7 @@ with search_tab:
         
         progress = (pages_completed/total_pages)*100 if total_pages else 0
         st.progress(progress/100)
+        st.write(f"Completed>>>{progress}%")
         
         
         with open(doc[2],"rb") as f:

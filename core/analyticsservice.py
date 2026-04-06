@@ -20,10 +20,10 @@ class AnalyticsService:
         connection = connect()
         cursor = connection.cursor()
         cursor.execute("""
-            SELECT COUNT(DISTINCT page_number) FROM page_vists   
+            SELECT COUNT(DISTINCT page_number) FROM page_visits   
             WHERE document_id = ?    
                        
-                       """,doc_id)
+                       """,(doc_id,))
         result = cursor.fetchone()
         result = result[0]
         connection.close()
