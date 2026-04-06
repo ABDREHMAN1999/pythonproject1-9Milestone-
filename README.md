@@ -11,7 +11,7 @@ It is built with a focus on clean architecture principles, separating UI, busine
 
 
 ## 🏗️ Project Structure
-![Project Structure](assets/project structure.png)
+![Project Structure](assets/project-structure.png)
 
 
 
