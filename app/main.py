@@ -76,12 +76,12 @@ with search_tab:
         current_page = st.session_state.current_page
         col1 , col2, col3 = st.columns([1,2,1])
         with col1:
-            if st.button("<-previous") and current_page>0:
+            if st.button("<-previous", type = "primary") and current_page>0:
                 st.session_state.current_page -=1
                 st.rerun()
                 
         with col3:
-            if st.button("next->") and current_page<total_pages-1:
+            if st.button("next->", type = "primary") and current_page<total_pages-1:
                 st.session_state.current_page +=1
                 st.rerun()
         img_path = os.path.join(img_dir, images[current_page])
@@ -89,7 +89,7 @@ with search_tab:
 
         
 
-        if st.button("⬅ Back"):
+        if st.button("⬅ Back", type = "primary"):
             st.session_state.reader_mode = False
             st.session_state.selected_doc = None
             st.rerun()
