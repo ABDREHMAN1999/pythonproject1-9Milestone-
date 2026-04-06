@@ -26,8 +26,20 @@ def init_db():
                    )
                    """)
     
+    #print("db operation successful")
+    #print("Generated ID:", cursor.lastrowid)
+    
+    cursor.execute("""
+                CREATE TABLE IF NOT EXISTS page_visits (
+                    id INTEGER PRIMARY KEY,
+                    document_id INTEGER,
+                    page_number INTEGER, 
+                    time_stamp TEXT   
+                )
+                   
+                   
+                   
+                   """)
     conn.commit()
-    print("db operation successful")
-    print("Generated ID:", cursor.lastrowid)
     conn.close()
     

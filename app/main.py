@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 import sys
+import datetime
 
 # ---------------- PATH SETUP ----------------
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -90,7 +91,7 @@ with search_tab:
         st.image(img_path)
         
         #recored page visit analytics
-        ana.update_analytics(doc[0], st.session_state.current_page)
+        ana.update_analytics(doc[0], st.session_state.current_page,str(datetime.datetime.now().isoformat()))
         pages_completed = ana.get_unique_pages(doc[0])
         
         progress = (pages_completed/total_pages)*100 if total_pages else 0
