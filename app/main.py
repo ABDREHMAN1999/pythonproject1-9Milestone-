@@ -86,8 +86,9 @@ with search_tab:
                 st.rerun()
         img_path = os.path.join(img_dir, images[current_page])
         st.image(img_path)
-
-        
+        with open(doc[2],"rb") as f:
+            data_pdf = f.read()
+        st.download_button("Download PDF", data = data_pdf, mime= "application/pdf", file_name=doc[1], type = "primary")
 
         if st.button("⬅ Back", type = "primary"):
             st.session_state.reader_mode = False
