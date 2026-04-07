@@ -74,7 +74,7 @@ class AnalyticsService:
         connection = connect()
         cursor = connection.cursor()
         cursor.execute("""
-                       SELECT doc_id , name, MAX(status) FROM doc_completion GROUPBY doc_id , name
+                       SELECT doc_id , name, MAX(status) FROM doc_completion GROUP BY doc_id , name
                        
                        
                        
