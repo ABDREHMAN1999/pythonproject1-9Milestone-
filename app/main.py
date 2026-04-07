@@ -50,6 +50,7 @@ with upload_tab:
     submit = st.button("SUBMIT", type="primary")
 
     if submit:
+        ana.update_analytics_table("SUBMIT")
         if uploaded_file:
             service.upload_document(
                 uploaded_file, upload_tags, description, lecture_date
@@ -78,11 +79,13 @@ with search_tab:
         col1 , col2, col3 = st.columns([1,2,1])
         with col1:
             if st.button("<-previous", type = "primary") and current_page>0:
+                ana.update_analytics_table("<-previous")
                 st.session_state.current_page -=1
                 st.rerun()
                 
         with col3:
             if st.button("next->", type = "primary") and current_page<total_pages-1:
+                ana.update_analytics_table("next->")
                 st.session_state.current_page +=1
                 st.rerun()
         img_path = os.path.join(img_dir, images[current_page])
@@ -99,9 +102,11 @@ with search_tab:
         
         with open(doc[2],"rb") as f:
             data_pdf = f.read()
-        st.download_button("Download PDF", data = data_pdf, mime= "application/pdf", file_name=doc[1], type = "primary")
-
+        download = st.download_button("Download PDF", data = data_pdf, mime= "application/pdf", file_name=doc[1], type = "primary")
+        if download:
+            ana.update_analytics_table("Download")
         if st.button("⬅ Back", type = "primary"):
+            ana.update_analytics_table("⬅ Back")
             st.session_state.reader_mode = False
             st.session_state.selected_doc = None
             st.rerun()
@@ -126,6 +131,7 @@ with search_tab:
 
         # 👉 Store results in session state
         if tag_search_button or date_search_button:
+            ana.update_analytics_table("Search")
             st.session_state.search_results = service.search_doc(
                 search_tags, search_date
             )
@@ -152,6 +158,7 @@ with search_tab:
                         st.write(doc[5])  # tags
                         st.write(doc[7])  # date
                         if st.button("Open", key=f"open_{doc[0]}"):
+                            ana.update_analytics_table("Open")
                             st.session_state.reader_mode = True
                             st.session_state.selected_doc = doc
                             st.session_state.current_page = 0

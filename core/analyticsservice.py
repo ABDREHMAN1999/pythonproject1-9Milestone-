@@ -1,4 +1,5 @@
 from db.database import connect
+import datetime
 
 
 
@@ -31,5 +32,18 @@ class AnalyticsService:
             return result
         else:
             return 0
+        
+    def update_analytics_table(self,button_label:str):
+        time_stamp = datetime.datetime.now().isoformat()
+        connection = connect()
+        cursor = connection.cursor()
+        cursor.execute("""
+                INSERT INTO analytics
+                (button_label, time_stamp)
+                VALUES (?,?)""",(button_label,time_stamp))
+        connection.commit()
+        connection.close()
+        print("analytics table updated")
+        
 
     
