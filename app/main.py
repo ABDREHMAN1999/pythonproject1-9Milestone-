@@ -192,7 +192,7 @@ with analytics_tab:
             doc_name = document[1]
             doc_status = document[2]
             doc_dict[doc_name] = doc_status
-        df_doc = pd.DataFrame(doc_status.items(), columns=["Document", "Completion Status"])
+        df_doc = pd.DataFrame(doc_data.items(), columns=["Document", "Completion Status"])
         st.write(df_doc)
         
             

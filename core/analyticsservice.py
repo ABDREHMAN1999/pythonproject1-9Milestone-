@@ -55,5 +55,33 @@ class AnalyticsService:
         data = cursor.fetchall()
         connection.close()
         return data
+    
+    def update_doc_status(self,doc_id:int, name: str , status:float):
+        connection = connect()
+        cursor = connection.cursor()
+        cursor.execute("""
+                  INSERT INTO doc_completion
+                  (doc_id, name, status)
+                  VALUES (?,?,?)
+                  
+                       
+                       
+                       """,(doc_id,name,status))
+        connection.commit()
+        connection.close()
+    
+    def get_doc_status(self):
+        connection = connect()
+        cursor = connection.cursor()
+        cursor.execute("""
+                       SELECT doc_id , name, MAX(status) FROM doc_completion GROUPBY doc_id , name
+                       
+                       
+                       
+                       """)
+        doc_data = cursor.fetchall()
+        connection.close()
+        return doc_data
+        
 
     
