@@ -1,4 +1,4 @@
-from db.database import connect
+from db.database import connect, init_db
 import datetime
 
 
@@ -71,6 +71,7 @@ class AnalyticsService:
         connection.close()
     
     def get_doc_status(self):
+        init_db()
         connection = connect()
         cursor = connection.cursor()
         cursor.execute("""
