@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import sys
 import datetime
+import pandas as pd 
 
 # ---------------- PATH SETUP ----------------
 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -110,6 +111,8 @@ with search_tab:
             st.session_state.reader_mode = False
             st.session_state.selected_doc = None
             st.rerun()
+        
+        ana.update_doc_status(doc[0], doc[1], progress)
             
         
 
@@ -166,4 +169,34 @@ with search_tab:
 
 # ================= ANALYTICS =================
 with analytics_tab:
-    st.write("Analytics coming soon...")
+    st.subheader('App Usage')
+    container = st.container(border = True, height = 400)
+    with container:
+        data = ana.get_analytics_data()
+        button_dict = dict()
+        for button in data:
+            button_label = button[0]
+            button_count = button[1]
+            button_dict[button_label]=button_count
+        df = pd.DataFrame(button_dict.items(), columns=["Button", "Count"])
+        st.bar_chart(data = df, x="Button", y ="Count" ,)
+        st.write("button click data below, visualization above")
+        st.write(df)
+        
+    st.subheader("Document Status")
+    container = st.container(border = True, height = 500)
+    with container:
+        doc_data = ana.get_doc_status()
+        doc_dict = dict()
+        for document in doc_data:
+            doc_name = document[1]
+            doc_status = document[2]
+            doc_dict[doc_name] = doc_status
+        df_doc = pd.DataFrame(doc_status.items(), columns=["Document", "Completion Status"])
+        st.write(df_doc)
+        
+            
+    
+    
+        
+            

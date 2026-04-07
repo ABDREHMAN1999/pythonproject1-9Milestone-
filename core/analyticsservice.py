@@ -44,6 +44,16 @@ class AnalyticsService:
         connection.commit()
         connection.close()
         print("analytics table updated")
-        
+    
+    def get_analytics_data(self):
+        connection = connect()
+        cursor = connection.cursor()
+        cursor.execute("""
+                SELECT button_label , COUNT(DISTINCT time_stamp) FROM analytics
+                GROUP BY button_label
+                       """)
+        data = cursor.fetchall()
+        connection.close()
+        return data
 
     
