@@ -50,8 +50,8 @@ with upload_tab:
     submit = st.button("SUBMIT", type="primary")
 
     if submit:
-        ana.update_analytics_table("SUBMIT")
         if uploaded_file:
+            ana.update_analytics_table("SUBMIT")
             service.upload_document(
                 uploaded_file, upload_tags, description, lecture_date
             )

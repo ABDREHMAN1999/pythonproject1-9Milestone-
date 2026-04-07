@@ -5,6 +5,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DB_PATH = os.path.abspath(os.path.join(BASE_DIR, "Data", "pdf.db"))
 
 def connect():
+    print("DB_PATH",DB_PATH)
     return sqlite3.connect(DB_PATH)
 
 def init_db():
@@ -40,6 +41,11 @@ def init_db():
                    
                    
                    """)
+    cursor.execute("""
+                CREATE TABLE IF NOT EXISTS analytics(
+                    button_label TEXT,
+                    time_stamp TEXT
+                )""")
     conn.commit()
     conn.close()
     
