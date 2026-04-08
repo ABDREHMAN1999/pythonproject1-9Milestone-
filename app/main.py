@@ -193,14 +193,31 @@ with Clear_Data:
     password = st.text_input("Enter password to clear Database", type = "password")
     reset = st.button("Clear Data", type = "primary", key = "Database clear")
     if reset:
-        del_data.cleardatabase()
+        db_password = del_data.check_db_password()
+        if password == db_password:
+            del_data.cleardatabase()
+            st.success("Data base cleared successfully")
+        else:
+            st.error("Incorrect Database Password")
+            
         
     
     st.subheader("Set Database password: ")
     old_password = st.text_input("Enter old password: ", type = "password")
     new_password = st.text_input("Enter new password: ")
     new_password_confirm = st.text_input("Confirm new password: ")
-    st.button("Change Password", type = "primary")
+    change_password = st.button("Change Password", type = "primary")
+    if change_password:
+        if old_password == del_data.check_db_password():
+            if new_password == new_password_confirm:
+                del_data.update_db_password(new_password_confirm)
+                st.success("Password changed successful")
+            else:
+                st.error("new passwords not matching, please make sure new passwords match")
+        else:
+            st.error("Incorrect Database Password")
+                
+                
         
         
         

@@ -2,7 +2,6 @@ from db.database import connect
 
 
 class clearDatabase:
-    
     def cleardatabase(self):
         connection = connect()
         cursor = connection.cursor()
@@ -43,6 +42,7 @@ class clearDatabase:
                     WHERE 1 = 1  
                        """)
         password = cursor.fetchall()
+        password = password[0][0]
         connection.close()
         return password
         
