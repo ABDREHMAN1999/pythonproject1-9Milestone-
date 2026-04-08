@@ -114,7 +114,7 @@ with search_tab:
             st.session_state.selected_doc = None
             st.rerun()
         
-        ana.update_doc_status(doc[0], doc[1], progress)
+        #ana.update_doc_status(doc[0], doc[1], progress)
             
         
 
@@ -197,6 +197,7 @@ with Clear_Data:
         if password == db_password:
             del_data.cleardatabase()
             st.success("Data base cleared successfully")
+            st.rerun()
         else:
             st.error("Incorrect Database Password")
             
@@ -212,6 +213,7 @@ with Clear_Data:
             if new_password == new_password_confirm:
                 del_data.update_db_password(new_password_confirm)
                 st.success("Password changed successful")
+                st.rerun()
             else:
                 st.error("new passwords not matching, please make sure new passwords match")
         else:
