@@ -204,8 +204,8 @@ with Clear_Data:
     
     st.subheader("Set Database password: ")
     old_password = st.text_input("Enter old password: ", type = "password")
-    new_password = st.text_input("Enter new password: ")
-    new_password_confirm = st.text_input("Confirm new password: ")
+    new_password = st.text_input("Enter new password: ", type = "password")
+    new_password_confirm = st.text_input("Confirm new password: ", type = "password")
     change_password = st.button("Change Password", type = "primary")
     if change_password:
         if old_password == del_data.check_db_password():
