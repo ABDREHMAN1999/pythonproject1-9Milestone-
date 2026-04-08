@@ -197,7 +197,6 @@ with Clear_Data:
         if password == db_password:
             del_data.cleardatabase()
             st.success("Data base cleared successfully")
-            st.rerun()
         else:
             st.error("Incorrect Database Password")
             
