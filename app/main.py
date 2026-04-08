@@ -9,11 +9,13 @@ base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(base_dir)
 
 from db.database import init_db, connect
+from db.clear_database import clearDatabase
 from core.services import DocumentService
 from core.analyticsservice import AnalyticsService
 
 service = DocumentService()
 ana = AnalyticsService()
+del_data = clearDatabase()
 
 # ---------------- SESSION STATE ----------------
 if "reader_mode" not in st.session_state:
@@ -35,8 +37,8 @@ st.set_page_config(page_title="DocManager", layout="wide")
 st.title("📂📂📂 PDF MANAGER")
 st.divider()
 
-upload_tab, search_tab, analytics_tab = st.tabs(
-    ["Upload", "Search and view", "Analytics"]
+upload_tab, search_tab, analytics_tab, Clear_Data = st.tabs(
+    ["Upload", "Search and view", "Analytics","Clear All Data"]
 )
 
 # ================= UPLOAD =================
@@ -183,17 +185,26 @@ with analytics_tab:
         st.write("button click data below, visualization above")
         st.write(df)
         
-    st.subheader("Document Status")
-    container = st.container(border = True, height = 500)
-    with container:
-        doc_data = ana.get_doc_status()
-        doc_dict = dict()
-        for document in doc_data:
-            doc_name = document[1]
-            doc_status = document[2]
-            doc_dict[doc_name] = doc_status
-        df_doc = pd.DataFrame(doc_data.items(), columns=["Document", "Completion Status"])
-        st.write(df_doc)
+        
+
+
+with Clear_Data:
+    st.subheader("Reset Database: ")
+    password = st.text_input("Enter password to clear Database", type = "password")
+    reset = st.button("Clear Data", type = "primary", key = "Database clear")
+    if reset:
+        del_data.cleardatabase()
+        
+    
+    st.subheader("Set Database password: ")
+    old_password = st.text_input("Enter old password: ", type = "password")
+    new_password = st.text_input("Enter new password: ")
+    new_password_confirm = st.text_input("Confirm new password: ")
+    st.button("Change Password", type = "primary")
+        
+        
+        
+    
         
             
     

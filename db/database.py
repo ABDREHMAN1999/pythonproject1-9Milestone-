@@ -45,6 +45,16 @@ def init_db():
                     button_label TEXT,
                     time_stamp TEXT
                 )""")
+    
+    cursor.execute("""
+                   CREATE TABLE IF NOT EXISTS db_password(
+                    id PRIMARY KEY, 
+                    password
+                   )
+                   """)
+    
+    
+    
     conn.commit()
     conn.close()
     
